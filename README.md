@@ -2,7 +2,7 @@
 
 a component to lazyload images
 
-## feature
+## Feature
 
 1. wirtten in native javascript
 2. use intersectionObserver when support, fallback listen scroll event to check image's getBoundingClientRect
