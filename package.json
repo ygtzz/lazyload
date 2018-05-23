@@ -1,14 +1,14 @@
 {
-  "name": "lazyload",
-  "version": "0.0.1",
-  "description": "lazyload",
+  "name": "my-lazyload",
+  "version": "0.1.0",
+  "description": "image lazyload",
   "main": "./dist/lazyload.js",
   "scripts": {
     "build": "webpack",
     "test": "test"
   },
   "keywords": [
-    "prefix"
+    "lazyload"
   ],
   "repository": {
     "type": "git",

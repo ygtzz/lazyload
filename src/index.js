@@ -4,8 +4,12 @@ function LazyLoad(opts){
     opts = assign({
         threshold: 0,
         imgSelector:'img[data-src]',
+        imgAttr: 'data-src',
+        imgDefer: 'data-defer',
         container: window
-    },opts);
+    }, opts);
+
+    opts.threshold = parseInt(opts.threshold);
 
     var images = document.querySelectorAll(opts.imgSelector),
         intersectionMode = window.IntersectionObserver ? true : false,
@@ -36,21 +40,33 @@ function LazyLoad(opts){
         }
         //进入页面先执行一次，将首屏的图片加载出来
         fCheckImage();
+        //将延迟加载的图片加载出来
+        fLoadDeferImages();
     }   
     else{
         console.log('lazyload images is empty');
     }
 
+    function fLoadDeferImages(){
+        images.forEach((item,index) => {
+            var defer = item.getAttribute(opts.imgDefer);
+            if(defer){
+                defer = parseInt(defer);
+                setTimeout(() => {
+                    fLoadImage(item);
+                    loads.push(index);
+                },defer);
+            }
+        });
+        fFilterImageFormLoads(images);
+    }
+
     function fCheckImage(){
         if(intersectionMode){
-            console.log('intersection');
             images.forEach(item => io.observe(item));
         }
         else{
-            images = images.filter(function(item,index){
-                return loads.indexOf(index) == -1; 
-            });
-            loads.length = 0;
+            fFilterImageFormLoads();
             if(!images.length){
                 opts.container.removeEventListener('scroll',fScroll);
                 loads = null;
@@ -72,10 +88,19 @@ function LazyLoad(opts){
     
     function fLoadImage(imgDom){
         var img = new Image();
-        img.src = imgDom.getAttribute('data-src');
+        img.src = imgDom.getAttribute(opts.imgAttr);
         img.onload = function(){
             imgDom.src = img.src;
         }
+    }
+
+    function fFilterImageFormLoads(images){
+        images = images.filter(function(item,index){
+            return loads.indexOf(index) == -1; 
+        });
+        loads.length = 0;
+
+        return images;
     }
 
     function debounce(fn, delay, atleast) {
