@@ -1,0 +1,32 @@
+{
+  "name": "lazyload",
+  "version": "0.0.1",
+  "description": "lazyload",
+  "main": "./dist/lazyload.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "test"
+  },
+  "keywords": [
+    "prefix"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ygtzz/lazyload.git"
+  },
+  "author": "ygtzz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ygtzz/lazyload/issues"
+  },
+  "homepage": "https://github.com/ygtzz/lazyload#readme",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "6.x",
+    "babel-preset-es2015": "6.18.0",
+    "webpack": "3.x"
+  },
+  "dependencies": {
+    "object-assign": "^4.1.1"
+  }
+}
