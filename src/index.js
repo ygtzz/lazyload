@@ -16,7 +16,8 @@ function LazyLoad(opts){
         io = null,
         loads = [],
         seeHeight = null,
-        fScroll = null;
+        fCheck = null,
+        triggers = ['scroll','resize'];
     
     if(images){
         images = Array.prototype.slice.call(images);
@@ -34,9 +35,11 @@ function LazyLoad(opts){
             window.io = io;
         }
         else{   
-            fScroll = debounce(fCheckImage,200,300);
+            fCheck = debounce(fCheckImage,200,300);
             seeHeight = document.documentElement.clientHeight || document.body.clientHeight;
-            opts.container.addEventListener('scroll',fScroll);
+            triggers.forEach(item => {
+                opts.container.addEventListener(item,fCheck);
+            });
         }
         //进入页面先执行一次，将首屏的图片加载出来
         fCheckImage();
@@ -68,7 +71,9 @@ function LazyLoad(opts){
         else{
             fFilterImageFormLoads();
             if(!images.length){
-                opts.container.removeEventListener('scroll',fScroll);
+                triggers.forEach(item => {
+                    opts.container.removeEventListener(item,fCheck);
+                });
                 loads = null;
                 return;
             }
