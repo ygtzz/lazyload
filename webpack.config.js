@@ -4,7 +4,7 @@ var libraryName = 'lazyload';
 
 var config = {
     entry: __dirname + '/src/index.js',
-    // devtool: 'source-map',
+    devtool: 'source-map',
     output: {
         path: __dirname + '/dist',
         filename: libraryName + '.js',
@@ -23,6 +23,14 @@ var config = {
              }
         ]
     },
+    plugins:[
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            },
+            sourceMap: true
+        })
+    ],
     resolve: {
         extensions: ['.js']
     }
